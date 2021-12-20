@@ -18,4 +18,9 @@ Route::prefix('message')->group(function () {
 
 Route::prefix('choice')->group(function () {
     Route::get('/', [ChoiceController::class, 'index'])->name('choice.index');
+    Route::post('/create', [ChoiceController::class, 'create'])->name('choice.create');
+    Route::get('/edit/{id}',  [ChoiceController::class, 'getChoice'])->name('choice.edit');
+    Route::delete('/deletedetail/{id}', [ChoiceController::class, 'deleteDetail']);
+    Route::post('/update/{id}', [ChoiceController::class, 'updateChoice'])->name('choice.update');
+    Route::delete('/delete/{id}', [ChoiceController::class, 'delete']);
 });

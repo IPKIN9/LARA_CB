@@ -5,6 +5,11 @@
             <p class="text-danger">Periksa inputan anda sebelum mengirim</p>
         </div>
     @endif
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('status') }}
+        </div>
+    @endif
     @if (session('status'))
         <div class="alert alert-success">
             {{ session('status') }}
@@ -31,9 +36,9 @@
                             <td>{{ $no++ }}</td>
                             <td>{{ $d->content }}</td>
                             <td>
-                                <button id="edit-message" data-id="{{ Crypt::encrypt($d->id) }}"
-                                    class="btn btn-sm btn-primary">Edit</button>
-                                <button id="delete-message" data-id="{{ Crypt::encrypt($d->id) }}"
+                                <a href="{{ route('choice.edit', Crypt::encrypt($d->id)) }}" id="edit-choice"
+                                    class="btn btn-sm btn-primary">Lihat</a>
+                                <button id="delete-choice" data-id="{{ Crypt::encrypt($d->id) }}"
                                     class="btn btn-sm btn-danger">Del</button>
                             </td>
                         </tr>
@@ -59,10 +64,9 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            const d = new Date();
-            let time = d.getTime();
 
             $('#choice').DataTable();
+
             $(document).on('click', '#add-message', function() {
                 $('.modal-title').html('Create New Data');
                 $('.modal-body').html('');
@@ -82,35 +86,81 @@
                                 <label for="">Detail For Next Message</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" class="form-control form-primary">
+                                <input name="detailContent[]" type="text" class="form-control form-primary">
                             </div>
                             <div class="col-md-2">
-                                <button type="button" class="btn btn-sm btn-secondary mt-2">remove</button>
+                               
                             </div>
                         </div>
                     </div>
                 </div>
                 `);
-                $('#input-form').attr('action', "{{ route('message.create') }}");
+                $('#input-form').attr('action', "{{ route('choice.create') }}");
                 $('#input-form').attr('method', 'POST');
                 $('#myModal').modal('show');
+            });
 
-                $(document).on('click', '#add-detail', function() {
-                    $('#detail-content').append(`
-                        <div class="form-group row">
-                            <div class="col-md-4">
-                                <label for="">Detail For Next Message</label>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" class="form-control form-primary">
-                            </div>
-                            <div class="col-md-2">
-                                <button class="btn btn-sm btn-secondary mt-2">remove</button>
-                            </div>
+            $(document).on('click', '#add-detail', function() {
+                const d = new Date();
+                let time = d.getMinutes() + "-" + d.getSeconds();
+                $('#detail-content').append(`
+                    <div id=div-` + time + ` class="form-group row">
+                        <div class="col-md-4">
+                            <label for="">Detail For Next Message</label>
                         </div>
-                    `);
-                });
+                        <div class="col-md-6">
+                            <input name="detailContent[]" type="text" class="form-control form-primary">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" onclick="removeForm(this)" data-id="` + time + `" class="btn btn-sm btn-secondary mt-2">remove</button>
+                        </div>
+                    </div>
+                `);
+            });
+
+            $(document).on('click', '#delete-choice', function() {
+                let id = $(this).data('id');
+                let url = "choice/delete/" + id;
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: url,
+                            type: 'DELETE',
+                            success: function() {
+                                Swal.fire({
+                                    title: 'Deleted!',
+                                    text: 'Success to delete data.',
+                                    icon: 'success',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Oke'
+                                }).then((result) => {
+                                    location.reload();
+                                });
+                            },
+                            error: function() {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Ada yang salah!',
+                                });
+                            }
+                        });
+                    }
+                })
             });
         });
+
+        function removeForm(d) {
+            let id = d.getAttribute("data-id");
+            $('#div-' + id).remove();
+        }
     </script>
 @endsection
