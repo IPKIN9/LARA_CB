@@ -54,8 +54,8 @@
                     <li class="{{ Route::is('choice.index') ? 'active' : '' }}">
                         <a href="{{ route('choice.index') }}"><span class="ml-3 mr-3"></span> Choice</a>
                     </li>
-                    <li>
-                        <a href="#"><span class="ml-3 mr-3"></span> Routing</a>
+                    <li class="{{ Route::is('routing.index') ? 'active' : '' }}">
+                        <a href="{{ route('routing.index') }}"><span class="ml-3 mr-3"></span> Routing</a>
                     </li>
                 </ul>
             </div>
