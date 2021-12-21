@@ -18,7 +18,7 @@
     <h2 class="mb-4">Choice</h2>
     <div class="row">
         <div class="col-lg-12">
-            <button id="add-message" class="mb-4 btn btn-md btn-primary">Tambah Data</button>
+            <button id="add-choice" class="mb-4 btn btn-md btn-primary">Tambah Data</button>
             <table id="choice" class="table table-striped table-bordered" style="width:100%">
                 <thead class="text-center">
                     <tr>
@@ -67,7 +67,7 @@
 
             $('#choice').DataTable();
 
-            $(document).on('click', '#add-message', function() {
+            $(document).on('click', '#add-choice', function() {
                 $('.modal-title').html('Create New Data');
                 $('.modal-body').html('');
                 $('.modal-body').append(`

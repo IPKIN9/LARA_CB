@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\cms\ChoiceController;
 use App\Http\Controllers\cms\MessageController;
+use App\Http\Controllers\cms\RoutingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,4 +24,9 @@ Route::prefix('choice')->group(function () {
     Route::delete('/deletedetail/{id}', [ChoiceController::class, 'deleteDetail']);
     Route::post('/update/{id}', [ChoiceController::class, 'updateChoice'])->name('choice.update');
     Route::delete('/delete/{id}', [ChoiceController::class, 'delete']);
+});
+
+Route::prefix('routing')->group(function () {
+    Route::get('/', [RoutingController::class, 'index'])->name('routing.index');
+    Route::post('/create', [RoutingController::class, 'create'])->name('routing.create');
 });
