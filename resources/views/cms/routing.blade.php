@@ -40,20 +40,18 @@
                                 @if ($d->button_click == null)
                                     No button click
                                 @else
-                                    {{ $d->button_click }}
+                                    {{ $d->detail->content }}
                                 @endif</strong>
                             </td>
                             <td>{{ $d->message->content }}</td>
                             <td>
-                                @if ($d->next_message->content == null)
-                                    Route type is end
+                                @if ($d->next_message == null)
+                                    Route type is end or from
                                 @else
                                     {{ $d->next_message->content }}
                                 @endif
                             </td>
                             <td>
-                                <button id="edit-message" data-id="{{ Crypt::encrypt($d->id) }}"
-                                    class="btn btn-sm btn-primary">Edit</button>
                                 @if ($d->type_route == 'first')
                                     <button disabled class="btn btn-sm btn-secondary">Del</button>
                                 @else
@@ -161,6 +159,45 @@
                             break;
                     }
                 });
+            });
+
+            $(document).on('click', '#delete-message', function() {
+                let id = $(this).data('id');
+                let url = "routing/delete/" + id;
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: url,
+                            type: 'DELETE',
+                            success: function() {
+                                Swal.fire({
+                                    title: 'Deleted!',
+                                    text: 'Success to delete data.',
+                                    icon: 'success',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText: 'Oke'
+                                }).then((result) => {
+                                    location.reload();
+                                });
+                            },
+                            error: function() {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: 'Ada yang salah!',
+                                });
+                            }
+                        });
+                    }
+                })
             });
         });
     </script>

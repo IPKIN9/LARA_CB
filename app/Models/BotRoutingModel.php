@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RoutingModel extends Model
+class BotRoutingModel extends Model
 {
     protected $table = 'routing';
     protected $fillable = [

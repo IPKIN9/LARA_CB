@@ -6,8 +6,12 @@ use App\Http\Controllers\cms\RoutingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    return view('bot.BodyChat');
+})->name('chatbot.index');
+
+Route::get('/dashboard', function () {
     return view('cms/dashboard');
-});
+})->name('dashboard.index');
 
 Route::prefix('message')->group(function () {
     Route::get('/', [MessageController::class, 'index'])->name('message.index');
@@ -29,4 +33,5 @@ Route::prefix('choice')->group(function () {
 Route::prefix('routing')->group(function () {
     Route::get('/', [RoutingController::class, 'index'])->name('routing.index');
     Route::post('/create', [RoutingController::class, 'create'])->name('routing.create');
+    Route::delete('/delete/{id}', [RoutingController::class, 'delete']);
 });

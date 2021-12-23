@@ -43,7 +43,7 @@
                 <h1><a href="#" class="logo">ChatBOT</a></h1>
                 <ul class="list-unstyled components mb-5">
                     <li class=" {{ Route::is('dashboard.index') ? 'active' : '' }}">
-                        <a href="#"><span class="fa fa-home mr-3"></span> Dashboard</a>
+                        <a href="{{ route('dashboard.index') }}"><span class="fa fa-home mr-3"></span> Dashboard</a>
                     </li>
 
                 </ul>

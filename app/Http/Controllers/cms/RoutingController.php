@@ -7,16 +7,17 @@ use App\Http\Requests\RoutingRequest;
 use App\Models\ChoiceModel;
 use App\Models\DetailModel;
 use App\Models\MessageModel;
-use App\Models\RoutingModel;
+use App\Models\BotRoutingModel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class RoutingController extends Controller
 {
     public function index()
     {
         $data = array(
-            'routing' => RoutingModel::with('detail', 'message', 'next_message')->get(),
+            'routing' => BotRoutingModel::with('detail', 'message', 'next_message')->get(),
             'detail' => DetailModel::all(),
             'message' => MessageModel::all(),
             'choice' => ChoiceModel::all(),
@@ -36,10 +37,21 @@ class RoutingController extends Controller
             'updated_at' => $date
         );
         try {
-            RoutingModel::create($data);
+            BotRoutingModel::create($data);
             return back()->with('status', 'Created new data success');
         } catch (\Throwable $err) {
             return back()->with('error', $err->getMessage());
+        }
+    }
+
+    public function delete($id)
+    {
+        $dataId = Crypt::decrypt($id);
+        try {
+            BotRoutingModel::where('id', $dataId)->delete();
+            return response()->json(['code' => '201']);
+        } catch (\Throwable $err) {
+            return response()->json($err);
         }
     }
 }
