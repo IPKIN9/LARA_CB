@@ -12,5 +12,9 @@ class ChoiceModel extends Model
         'id', 'content', 'created_at', 'updated_at'
     ];
 
+    public function detail_choice()
+    {
+        return $this->hasMany(DetailModel::class, 'choice_id', 'id');
+    }
     use HasFactory;
 }
