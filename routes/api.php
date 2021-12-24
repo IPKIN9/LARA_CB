@@ -16,7 +16,9 @@ Route::get('/first_message', function () {
     try {
         $routing = BotRoutingModel::where('type_route', 'first')->with('detail', 'message', 'next_message')->first();
         $button = DetailModel::where('choice_id', $routing->next_response)->get();
+        $count = $routing->count();
         return response()->json([
+            'count' => $count,
             'route' => $routing,
             'next' => $button
         ]);

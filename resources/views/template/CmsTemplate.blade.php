@@ -25,7 +25,6 @@
             width: 100%;
             height: 150px;
         }
-
     </style>
 </head>
 
@@ -39,6 +38,7 @@
                     <span class="sr-only">Toggle Menu</span>
                 </button>
             </div>
+            @hasanyrole('super_admin|admin')
             <div class="p-4">
                 <h1><a href="#" class="logo">ChatBOT</a></h1>
                 <ul class="list-unstyled components mb-5">
@@ -47,6 +47,9 @@
                     </li>
 
                 </ul>
+                @else
+                @endhasanyrole
+                @hasanyrole('super_admin')
                 <ul class="list-unstyled components mb-5">
                     <li class="{{ Route::is('message.index') ? 'active' : '' }}">
                         <a href="{{ route('message.index') }}"><span class="ml-3 mr-3"></span> Message</a>
@@ -58,7 +61,26 @@
                         <a href="{{ route('routing.index') }}"><span class="ml-3 mr-3"></span> Routing</a>
                     </li>
                 </ul>
+                <ul class="list-unstyled components mb-5">
+                    <li class="{{ Route::is('user.index') ? 'active' : '' }}">
+                        <a href="{{route('user.index')}}" class="dropdown-item">
+                            <i class="ti-power-off text-primary"></i>
+                            Add User
+                        </a>
+                    </li>
+                </ul>
+                @else
+                @endhasanyrole
+                <ul class="list-unstyled components mb-5">
+                    <li class="{{ Route::is('logout') ? 'active' : '' }}">
+                        <a href="{{route('logout')}}" class="dropdown-item">
+                            <i class="ti-power-off text-primary"></i>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
             </div>
+
         </nav>
 
         <!-- Page Content  -->
@@ -93,8 +115,8 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.js"
+        integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
