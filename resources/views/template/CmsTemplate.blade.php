@@ -25,7 +25,6 @@
             width: 100%;
             height: 150px;
         }
-
     </style>
 </head>
 
@@ -39,6 +38,7 @@
                     <span class="sr-only">Toggle Menu</span>
                 </button>
             </div>
+            @hasanyrole('super_admin|admin')
             <div class="p-4">
                 <h1><a href="#" class="logo">ChatBOT</a></h1>
                 <ul class="list-unstyled components mb-5">
@@ -59,6 +59,8 @@
                     </li>
                 </ul>
             </div>
+            @else
+            @endhasanyrole
         </nav>
 
         <!-- Page Content  -->
@@ -93,8 +95,8 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
-        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.js"
+        integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
