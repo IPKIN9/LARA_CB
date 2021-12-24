@@ -43,7 +43,7 @@
                 <h1><a href="#" class="logo">ChatBOT</a></h1>
                 <ul class="list-unstyled components mb-5">
                     <li class=" {{ Route::is('dashboard.index') ? 'active' : '' }}">
-                        <a href="#"><span class="fa fa-home mr-3"></span> Dashboard</a>
+                        <a href="{{ route('dashboard.index') }}"><span class="fa fa-home mr-3"></span> Dashboard</a>
                     </li>
 
                 </ul>
@@ -54,8 +54,8 @@
                     <li class="{{ Route::is('choice.index') ? 'active' : '' }}">
                         <a href="{{ route('choice.index') }}"><span class="ml-3 mr-3"></span> Choice</a>
                     </li>
-                    <li>
-                        <a href="#"><span class="ml-3 mr-3"></span> Routing</a>
+                    <li class="{{ Route::is('routing.index') ? 'active' : '' }}">
+                        <a href="{{ route('routing.index') }}"><span class="ml-3 mr-3"></span> Routing</a>
                     </li>
                 </ul>
             </div>
