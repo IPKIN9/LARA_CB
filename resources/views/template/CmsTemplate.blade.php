@@ -47,6 +47,9 @@
                     </li>
 
                 </ul>
+                @else
+                @endhasanyrole
+                @hasanyrole('super_admin')
                 <ul class="list-unstyled components mb-5">
                     <li class="{{ Route::is('message.index') ? 'active' : '' }}">
                         <a href="{{ route('message.index') }}"><span class="ml-3 mr-3"></span> Message</a>
@@ -58,9 +61,26 @@
                         <a href="{{ route('routing.index') }}"><span class="ml-3 mr-3"></span> Routing</a>
                     </li>
                 </ul>
+                <ul class="list-unstyled components mb-5">
+                    <li class="{{ Route::is('user.index') ? 'active' : '' }}">
+                        <a href="{{route('user.index')}}" class="dropdown-item">
+                            <i class="ti-power-off text-primary"></i>
+                            Add User
+                        </a>
+                    </li>
+                </ul>
+                @else
+                @endhasanyrole
+                <ul class="list-unstyled components mb-5">
+                    <li class="{{ Route::is('logout') ? 'active' : '' }}">
+                        <a href="{{route('logout')}}" class="dropdown-item">
+                            <i class="ti-power-off text-primary"></i>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
             </div>
-            @else
-            @endhasanyrole
+
         </nav>
 
         <!-- Page Content  -->

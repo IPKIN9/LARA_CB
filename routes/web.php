@@ -6,6 +6,8 @@ use App\Http\Controllers\cms\MessageController;
 use App\Http\Controllers\cms\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\cms\RoutingController;
+use App\Http\Controllers\cms\MasukanController;
+use App\Http\Controllers\Auth\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,10 +19,13 @@ Route::prefix('auth')->group(function () {
     Route::post('/check', [LoginController::class, 'check'])->name('auth.check');
 });
 
+Route::get('logout', function () {
+    Auth::logout();
+    return redirect(route('login'));
+})->name('logout');
+
 Route::middleware('auth')->group(function () {
     Route::group(['middleware' => ['role:super_admin']], function () {
-
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
         Route::prefix('message')->group(function () {
             Route::get('/', [MessageController::class, 'index'])->name('message.index');
@@ -45,6 +50,20 @@ Route::middleware('auth')->group(function () {
             Route::delete('/delete/{id}', [RoutingController::class, 'delete']);
         });
 
+        Route::prefix('user')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('user.index');
+            Route::get('/getById/{id}', [UserController::class, 'edit'])->name('user.edit');
+            Route::post('/create', [UserController::class, 'create'])->name('user.create');
+            Route::post('/update/{id}', [UserController::class, 'update'])->name('user.update');
+            Route::delete('/delete/{id}', [UserController::class, 'delete']);
+        });
+
+    });
+    Route::group(['middleware' => ['role:super_admin|admin']], function () {
+        Route::get('/dashboard', [MasukanController::class, 'index'])->name('dashboard.index');
+        Route::prefix('masukan')->group(function () {
+            Route::delete('/delete/{id}', [MasukanController::class, 'delete']);
+        });
     });
 
 });

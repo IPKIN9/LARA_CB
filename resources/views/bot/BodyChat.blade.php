@@ -47,7 +47,7 @@
             $('#body-myChatBot').append(loadChat);
             $.get(url, function(result) {
                 setTimeout(() => {
-                    if (result.next.length >= 1) {
+                    if (result.count >= 1) {
                         $('#loading-chat').remove();
                         $('#body-myChatBot').append(`
                             <div class="chat-bubble you">` + result.route.message.content + `.
