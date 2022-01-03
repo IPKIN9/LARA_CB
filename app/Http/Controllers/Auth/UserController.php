@@ -34,7 +34,8 @@ class UserController extends Controller
             'updated_at' => $date,
         );
         try {
-            User::create($data);
+            $user = User::create($data);
+            $user->assignRole($user->role);
             return back()->with('status', 'Created new data success');
         } catch (\Throwable $err) {
             return back()->with('error', $err->getMessage());
@@ -67,8 +68,7 @@ class UserController extends Controller
     }
 
     public function delete($id)
-    {
-        {
+    { {
             $dataId = Crypt::decrypt($id);
             try {
                 User::where('id', $dataId)->delete();

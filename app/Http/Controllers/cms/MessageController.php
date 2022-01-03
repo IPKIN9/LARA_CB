@@ -21,7 +21,7 @@ class MessageController extends Controller
     {
         $date = Carbon::now();
         $data = array(
-            'content' => $request->content,
+            'content' => nl2br($request->content),
             'type_message' => $request->type_message,
             'created_at' => $date,
             'updated_at' => $date,
@@ -45,7 +45,7 @@ class MessageController extends Controller
     {
         $date = Carbon::now();
         $data = array(
-            'content' => $request->content,
+            'content' => nl2br($request->content),
             'type_message' => $request->type_message,
             'updated_at' => $date,
         );

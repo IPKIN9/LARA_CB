@@ -34,7 +34,8 @@
                     @foreach ($data as $d)
                         <tr>
                             <td>{{ $no++ }}</td>
-                            <td>{{ $d->content }} <br> <strong>type is: {{ $d->type_message }}</strong></td>
+                            <td style="line-height: 1.3;">@nl2br($d->content) <br> <strong>type is:
+                                    {{ $d->type_message }}</strong></td>
                             <td>
                                 <button id="edit-message" data-id="{{ Crypt::encrypt($d->id) }}"
                                     class="btn btn-sm btn-primary">Edit</button>
@@ -116,6 +117,10 @@
                         </div>
                     </div>
                     `);
+                    var str = $("#input-content").val();
+                    var regex = /<br\s*[\/]?>/gi;
+                    $("#input-content").val(str.replace(regex, ""));
+
                     $('#type_message').val(result.type_message);
                     $('#input-form').attr('action', `message/update/` + result.id + ``);
                     $('#input-form').attr('method', 'POST');

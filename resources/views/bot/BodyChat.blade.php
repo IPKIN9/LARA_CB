@@ -153,7 +153,8 @@
 
                             default:
                                 $('#body-myChatBot').append(`
-                                <div id="div-` + time + `" class="chat-bubble you">` + result.route.message.content + `. Akhiri?
+                                <div id="div-` + time + `" class="chat-bubble you">` + result.route.message.content + `.
+                                <br />Akhiri?
                                     <div class="col text-center mt-2">
                                         <button onclick="
                                         setTimeout(() => {
